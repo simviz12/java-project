@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Nuevo Reporte')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: sidebar-empleado}"></div>
+<main class="main-content">
+    <h2 class="mb-4">Registrar avance</h2>
+    <div class="card">
+        <div class="card-body">
+            <form th:action="@{/reportes/nuevo}" th:object="${reporte}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="mb-3">
+                    <label class="form-label">Tarea *</label>
+                    <select th:field="*{tareaId}" class="form-select" required>
+                        <option value="">Seleccionar tarea en progreso...</option>
+                        <option th:each="t : ${tareas}" th:value="${t.id}"
+                                th:text="${t.titulo + ' (' + t.estado + ')'}"></option>
+                    </select>
+                    <div class="text-danger small" th:errors="*{tareaId}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Fecha *</label>
+                    <input type="date" th:field="*{fecha}" class="form-control" required/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Avance (%) *</label>
+                    <input type="number" th:field="*{avancePorcentaje}" class="form-control" min="0" max="100" required/>
+                    <div class="text-danger small" th:errors="*{avancePorcentaje}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tipo *</label>
+                    <select th:field="*{tipo}" class="form-select" required>
+                        <option th:each="tp : ${tipos}" th:value="${tp}" th:text="${tp}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descripción *</label>
+                    <textarea th:field="*{descripcion}" class="form-control" rows="4" required></textarea>
+                    <div class="text-danger small" th:errors="*{descripcion}"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar reporte</button>
+                <a th:href="@{/dashboard-empleado}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

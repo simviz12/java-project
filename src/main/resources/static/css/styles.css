@@ -1,0 +1,105 @@
+:root {
+    --primary: #1E3A5F;
+    --primary-light: #2a5080;
+    --bg: #FFFFFF;
+    --surface: #F8F9FA;
+    --sidebar-width: 250px;
+}
+
+body {
+    background-color: var(--surface);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--primary);
+    color: #fff;
+    padding-top: 1rem;
+    z-index: 1000;
+}
+
+.sidebar .brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 1rem;
+}
+
+.sidebar .nav-link {
+    color: rgba(255,255,255,0.85);
+    padding: 0.65rem 1.25rem;
+    border-radius: 0;
+    transition: background 0.2s;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: var(--primary-light);
+    color: #fff;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #2a5080 100%);
+}
+
+.login-card {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+}
+
+.badge-pendiente { background-color: #6c757d; }
+.badge-progreso { background-color: #0d6efd; }
+.badge-finalizada { background-color: #198754; }
+
+.table-proxima {
+    background-color: #fff3cd !important;
+}
+
+.stat-card {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 1.25rem;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}

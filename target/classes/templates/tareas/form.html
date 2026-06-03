@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Formulario Tarea')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: sidebar-gerente}"></div>
+<main class="main-content">
+    <h2 th:text="${tarea.id != null} ? 'Editar tarea' : 'Nueva tarea'" class="mb-4"></h2>
+    <div class="card">
+        <div class="card-body">
+            <form th:action="${tarea.id != null} ? @{/tareas/editar/{id}(id=${tarea.id})} : @{/tareas/crear}"
+                  th:object="${tarea}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="mb-3">
+                    <label class="form-label">Título *</label>
+                    <input type="text" th:field="*{titulo}" class="form-control" required/>
+                    <div class="text-danger small" th:errors="*{titulo}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Fecha límite *</label>
+                    <input type="date" th:field="*{fechaLimite}" class="form-control" required/>
+                    <div class="text-danger small" th:errors="*{fechaLimite}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Responsable *</label>
+                    <select th:field="*{responsableId}" class="form-select" required>
+                        <option value="">Seleccionar...</option>
+                        <option th:each="e : ${empleados}" th:value="${e.id}" th:text="${e.nombre}"></option>
+                    </select>
+                    <div class="text-danger small" th:errors="*{responsableId}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Proyecto *</label>
+                    <select th:field="*{proyectoId}" class="form-select" required>
+                        <option value="">Seleccionar...</option>
+                        <option th:each="p : ${proyectos}" th:value="${p.id}" th:text="${p.nombre}"></option>
+                    </select>
+                    <div class="text-danger small" th:errors="*{proyectoId}"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/tareas}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

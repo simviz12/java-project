@@ -1,0 +1,27 @@
+@startuml contexto-productividadplus-simple
+' Versión simplificada (solo actores + sistema + externos)
+' Ideal para informe académico cuando no se requiere navegador explícito
+
+skinparam shadowing false
+skinparam roundcorner 6
+skinparam defaultFontName "Segoe UI"
+
+title Vista de Contexto — ProductividadPlus (Simplificada)
+
+actor Empleado as EMP
+actor Gerente as GER
+actor Administrador as ADM
+
+rectangle "Sistema\nProductividadPlus" as PP #1E3A5F
+
+database "MySQL 8.x" as DB
+cloud "Servicio de\nCorreo SMTP" as SMTP
+
+EMP --> PP : Gestiona tareas\ny reportes
+GER --> PP : Asigna tareas,\nestadísticas, PDF
+ADM --> PP : Administra\nusuarios
+
+PP --> DB : JDBC
+PP --> SMTP : Envía\nnotificaciones
+
+@enduml

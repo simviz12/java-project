@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Mi Panel')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: sidebar-empleado}"></div>
+<main class="main-content">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <h2 class="mb-1">Bienvenido, <span th:text="${nombre}"></span></h2>
+    <p class="text-muted mb-4">Resumen de tus tareas y reportes</p>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-header">Mis tareas asignadas</div>
+                <div class="card-body p-0">
+                    <table class="table mb-0">
+                        <thead><tr><th>Título</th><th>Fecha límite</th><th>Estado</th></tr></thead>
+                        <tbody>
+                        <tr th:each="t : ${tareas}" th:classappend="${t.proximaAVencer} ? 'table-proxima'">
+                            <td th:text="${t.titulo}"></td>
+                            <td th:text="${#temporals.format(t.fechaLimite, 'dd/MM/yyyy')}"></td>
+                            <td><span class="badge badge-progreso" th:text="${t.estado}"></span></td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(tareas)}"><td colspan="3" class="text-muted">Sin tareas asignadas</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-header">Últimos reportes</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="r : ${reportes}">
+                        <strong th:text="${r.tareaTitulo}"></strong>
+                        <span class="text-muted small" th:text="' - ' + ${r.avancePorcentaje} + '%'"></span>
+                    </li>
+                    <li class="list-group-item text-muted" th:if="${#lists.isEmpty(reportes)}">Sin reportes aún</li>
+                </ul>
+            </div>
+            <a th:href="@{/reportes/nuevo}" class="btn btn-primary mt-3 w-100">Registrar avance</a>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

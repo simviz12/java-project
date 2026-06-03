@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Mis Tareas')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: sidebar-empleado}"></div>
+<main class="main-content">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <h2 class="mb-4">Mis Tareas</h2>
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table mb-0">
+                <thead><tr><th>Título</th><th>Proyecto</th><th>Fecha límite</th><th>Estado</th><th>Acción</th></tr></thead>
+                <tbody>
+                <tr th:each="t : ${tareas}" th:classappend="${t.proximaAVencer} ? 'table-proxima'">
+                    <td>
+                        <span th:text="${t.titulo}"></span>
+                        <span th:if="${t.proximaAVencer}" class="badge bg-warning text-dark">¡Próxima!</span>
+                    </td>
+                    <td th:text="${t.proyectoNombre}"></td>
+                    <td th:text="${#temporals.format(t.fechaLimite, 'dd/MM/yyyy')}"></td>
+                    <td>
+                        <span th:class="${t.estado.name() == 'PENDIENTE'} ? 'badge badge-pendiente' :
+                                        (${t.estado.name() == 'EN_PROGRESO'} ? 'badge badge-progreso' : 'badge badge-finalizada')"
+                              th:text="${t.estado}"></span>
+                    </td>
+                    <td>
+                        <form th:if="${t.estado.name() != 'FINALIZADA'}"
+                              th:action="@{/mis-tareas/{id}/estado(id=${t.id})}" method="post" class="d-inline">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <input type="hidden" name="estado"
+                                   th:value="${t.estado.name() == 'PENDIENTE'} ? 'EN_PROGRESO' : 'FINALIZADA'"/>
+                            <button type="submit" class="btn btn-sm btn-primary"
+                                    th:text="${t.estado.name() == 'PENDIENTE'} ? 'Iniciar' : 'Finalizar'"></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>
