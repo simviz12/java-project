@@ -1,3 +1,10 @@
 *.md
 !INSTRUCCIONES.md
 !GUIA_EJECUCION.md
+# Exclude documentation folder except GUIA_EJECUCION.md
+/docs/*
+!/docs/GUIA_EJECUCION.md
+# Exclude build artifacts
+/target/
+.idea/
+
